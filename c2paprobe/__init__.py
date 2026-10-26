@@ -50,7 +50,7 @@ import struct
 import xml.etree.ElementTree as ET
 import zlib
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 __all__ = ['probe', 'probe_bytes', 'parse_store', 'parse_xmp', 'source_type',
            'IPTC_TERMS', 'MAX_STORE', '__version__']

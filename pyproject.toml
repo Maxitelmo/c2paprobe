@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "c2paprobe"
-version = "0.1.0"
+version = "0.1.1"
 description = "Read-only reader for the Content Credentials (C2PA) and IPTC digital source type a media file declares, as vendored by the LEAPP tools"
 # Standard library only, which is what lets the LEAPP tools vendor it as one file.
 readme = "README.md"
