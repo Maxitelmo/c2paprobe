@@ -4,7 +4,7 @@ A read-only reader for the Content Credentials (C2PA) and the IPTC digital sourc
 type a picture or video declares about itself, written for digital forensics work.
 This repository is the canonical home of the module that
 [iLEAPP](https://github.com/abrignoni/iLEAPP) and
-[ALEAPP](https://github.com/abrignoni/ALEAPP) vendor as `scripts/c2paprobe.py`.
+[ALEAPP](https://github.com/abrignoni/ALEAPP) vendor as `scripts/vendor/c2paprobe.py`.
 Pure Python, no dependencies, Python 3.10 or later.
 
 ## What it does not do
