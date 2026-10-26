@@ -320,11 +320,16 @@ def gif_sub_blocks(data):
     return out + b'\x00'
 
 
-def gif(c2pa=None, xmp_packet=None, trailer=True):
+def gif(c2pa=None, xmp_packet=None, trailer=True, xmp_sub_blocks=False):
+    """``xmp_sub_blocks`` writes the XMP packet and its magic trailer as data sub-blocks,
+    as c2pa-rs does, instead of raw as the XMP specification lays it out."""
     out = b'GIF89a' + struct.pack('<HH', 1, 1) + b'\x80\x00\x00' + b'\x00\x00\x00\xff\xff\xff'
     if xmp_packet is not None:
         magic = bytes([1]) + bytes(range(255, -1, -1))
-        out += b'\x21\xff\x0bXMP DataXMP' + xmp_packet + magic + b'\x00'
+        if xmp_sub_blocks:
+            out += b'\x21\xff\x0bXMP DataXMP' + gif_sub_blocks(xmp_packet + magic)
+        else:
+            out += b'\x21\xff\x0bXMP DataXMP' + xmp_packet + magic + b'\x00'
     if c2pa is not None:
         out += b'\x21\xff\x0bC2PA_GIF\x01\x00\x00' + gif_sub_blocks(c2pa)
     out += b'\x2c' + struct.pack('<HHHH', 0, 0, 1, 1) + b'\x00' + b'\x02' + gif_sub_blocks(b'\x44\x01')

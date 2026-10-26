@@ -239,6 +239,17 @@ class Containers(unittest.TestCase):
         self.absent(build.gif(), 'gif')
         self.truncated(build.gif(trailer=False))
 
+    def test_gif_xmp_in_sub_blocks(self):
+        # c2pa-rs 0.91 writes a GIF's XMP and its magic trailer as data sub-blocks, so a
+        # length byte falls every 255 bytes of the packet; a remote manifest's address
+        # longer than that is cut by one.
+        remote = 'https://example.invalid/' + 'm' * 300 + '/manifest.c2pa'
+        r = self.check(build.gif(xmp_packet=build.xmp(provenance=remote), xmp_sub_blocks=True),
+                       'gif', [], ['GIF XMP application extension'])
+        self.assertEqual(r['remote_manifest'], remote)
+        self.assertEqual(r['xmp'][0]['creators'], ['Jane Doe'])
+        self.assertEqual(r['errors'], [])
+
     def test_tiff(self):
         for big_endian in (False, True):
             with self.subTest(big_endian=big_endian):
